@@ -64,7 +64,8 @@ var fsPromise = require("fs/promises");
 var fs = require("fs");
 var DEFAULT_SETTINGS = {
     theYear: "2024",
-    theMonth: "1"
+    theMonth: "1",
+    filePath: "/daily/"
 };
 var popmonth = /** @class */ (function (_super) {
     __extends(popmonth, _super);
@@ -131,7 +132,7 @@ var popmonth = /** @class */ (function (_super) {
             return __generator(this, function (_g) {
                 switch (_g.label) {
                     case 0:
-                        dir = "/daily/";
+                        dir = this.settings.filePath;
                         theYear = parseInt(this.settings.theYear);
                         theMonth = parseInt(this.settings.theMonth);
                         limit = daysInMonth(theMonth, theYear);
@@ -204,7 +205,7 @@ var popmonth = /** @class */ (function (_super) {
                         return [3 /*break*/, 16];
                     case 16:
                         for (x = 1; x <= limit; x++) {
-                            filestring = "/daily/" + theYear.toString() + "-" + theMonth.toString().padStart(2, '0') + "-" + x.toString().padStart(2, '0') + ".md";
+                            filestring = this.settings.filePath + theYear.toString() + "-" + theMonth.toString().padStart(2, '0') + "-" + x.toString().padStart(2, '0') + ".md";
                             dateString = theYear.toString() + "-" + theMonth.toString() + "-" + x.toString() + " 00:00:00";
                             thisDay = new Date(dateString);
                             dayNum = thisDay.getDay();
@@ -270,6 +271,26 @@ var popmonthTab = /** @class */ (function (_super) {
                     switch (_a.label) {
                         case 0:
                             this.plugin.settings.theMonth = value;
+                            return [4 /*yield*/, this.plugin.saveSettings()];
+                        case 1:
+                            _a.sent();
+                            return [2 /*return*/];
+                    }
+                });
+            }); });
+        });
+        new obsidian_1.Setting(containerEl)
+            .setName("FilePath")
+            .setDesc("Calendar File Path")
+            .addText(function (text) {
+            return text
+                .setPlaceholder("/daily/")
+                .setValue(_this.plugin.settings.filePath)
+                .onChange(function (value) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            this.plugin.settings.filePath = value;
                             return [4 /*yield*/, this.plugin.saveSettings()];
                         case 1:
                             _a.sent();

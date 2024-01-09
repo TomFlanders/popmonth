@@ -5,11 +5,13 @@ const fs = require("fs");
 interface popmonthSettings {
   theYear: string;
   theMonth: string;
+  filePath: string;
 }
 
 const DEFAULT_SETTINGS: Partial<popmonthSettings> = {
   theYear: "2024",
-  theMonth: "1"
+  theMonth: "1",
+  filePath: "/daily/"
 };
 
 export default class popmonth extends Plugin {
@@ -38,7 +40,7 @@ export default class popmonth extends Plugin {
   }
 
   async createFiles() {
-    const dir = "/daily/"
+    const dir = this.settings.filePath;
     function daysInMonth (month:number, year:number) {
       return new Date(year, month, 0).getDate();
     }
@@ -81,7 +83,7 @@ export default class popmonth extends Plugin {
     }
 
     for (let x = 1; x <= limit; x++){
-      let filestring = "/daily/" + theYear.toString() + "-" + theMonth.toString().padStart(2, '0') + "-" + x.toString().padStart(2, '0') + ".md";
+      let filestring = this.settings.filePath + theYear.toString() + "-" + theMonth.toString().padStart(2, '0') + "-" + x.toString().padStart(2, '0') + ".md";
       let dateString = theYear.toString() + "-" + theMonth.toString() + "-" + x.toString() + " 00:00:00";
       let thisDay = new Date(dateString);
       let dayNum = thisDay.getDay();
@@ -139,5 +141,19 @@ export class popmonthTab extends PluginSettingTab {
               await this.plugin.saveSettings();
             })
         );
+
+        new Setting(containerEl)
+        .setName("FilePath")
+        .setDesc("Calendar File Path")
+        .addText((text) =>
+          text
+            .setPlaceholder("/daily/")
+            .setValue(this.plugin.settings.filePath)
+            .onChange(async (value) => {
+              this.plugin.settings.filePath = value;
+              await this.plugin.saveSettings();
+            })
+        );
+
       }
   }
