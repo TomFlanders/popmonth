@@ -1,6 +1,6 @@
 {
   "id": "popmonth",
-  "name": "popmonth",
+  "name": "Populate Month",
   "version": "1.0.0",
   "description": "Populates a month of files with todos",
   "isDesktopOnly": false,
