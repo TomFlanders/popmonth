@@ -3,6 +3,7 @@
   "name": "Populate Month",
   "version": "1.0.0",
   "description": "Populates a month of files with todos",
-  "isDesktopOnly": false,
-  "js": "main.js"
+  "isDesktopOnly": "true",
+  "js": "main.js",
+  "author": "Tom Flanders"
 }
