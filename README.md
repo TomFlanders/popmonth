@@ -25,13 +25,15 @@ Types are:
     daily (added to every file, itemDay is always 0)
 
 example:
-weekday,0,- [ ] Backstage Searches
-weekday,6,- [ ] Publish 100 Words
+weekday,0,- [ ] Job Searches
+weekday,6,- [ ] Publish Blog
 spec,1,- [ ] Archive last months date files
 spec,15,- [ ] Website Validations
 limit,0,- [ ] Populate Next Month
 daily,0,- [ ] morning pills
 daily,0,- [ ] evening pills
+
+I use the checkbox markup, but anything could be used.
 
 Set settings for month, year and folder
 
@@ -39,7 +41,12 @@ From the command menu, select popmonth:popmonth
 
 Files that already exist will be appended. Others will be created.
 
+Files are created in the folder specified in the settings, using the format: YYYY-MM-DD.md
+
+
 ## output
 
 ## Issues
-Tested on Windows. To be tested on Linux and Android
+Tested on Windows and Linux. 
+To be tested on Android.
+I don't have a Mac, so can't test for that.
