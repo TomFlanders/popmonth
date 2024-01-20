@@ -47,14 +47,15 @@ export default class popmonth extends Plugin {
     
     let theYear = parseInt(this.settings.theYear);
     let theMonth = parseInt(this.settings.theMonth);
-    let limit = daysInMonth(theMonth,theYear);
+    let limit: number = daysInMonth(theMonth,theYear);
     let spec: string[] = ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""];
     let daydata: string[] = ["","","","","","",""];
-    let dailyTasks = "";
+    let dailyTasks: string = "";
 
     const basePath = (this.app.vault.adapter as any).basePath;
 
-    const file = await fsPromise.open(basePath + '/.obsidian/plugins/popmonth/data.csv', 'r');
+    const file =  await fsPromise.open(basePath + this.app.vault.configDir + '/plugins/popmonth/data.csv', 'r');
+
     for await (const line of file.readLines()) {
       let splitdata = line.split(",")
       switch(splitdata[0]){
@@ -83,16 +84,16 @@ export default class popmonth extends Plugin {
     }
 
     for (let x = 1; x <= limit; x++){
-      let filestring = this.settings.filePath + theYear.toString() + "-" + theMonth.toString().padStart(2, '0') + "-" + x.toString().padStart(2, '0') + ".md";
-      let dateString = theYear.toString() + "-" + theMonth.toString() + "-" + x.toString() + " 00:00:00";
-      let thisDay = new Date(dateString);
-      let dayNum = thisDay.getDay();
+      let filestring: string = this.settings.filePath + theYear.toString() + "-" + theMonth.toString().padStart(2, '0') + "-" + x.toString().padStart(2, '0') + ".md";
+      let dateString: string = theYear.toString() + "-" + theMonth.toString() + "-" + x.toString() + " 00:00:00";
+      let thisDay: Date = new Date(dateString);
+      let dayNum: number = thisDay.getDay();
 
-      let pmdata = daydata[dayNum];
+      let pmdata: string = daydata[dayNum];
       pmdata += spec[x];
       pmdata += dailyTasks;
 
-     let filestring2 = basePath + filestring;
+     let filestring2: string = basePath + filestring;
      if (fs.existsSync(filestring2)) {
       fs.appendFileSync(filestring2, pmdata, 'utf-8');
      } else {
